@@ -4,7 +4,8 @@
 #else
 #import <React/RCTBridgeModule.h>
 #endif
-
+#import <AVFoundation/AVFoundation.h>
+#import <Photos/Photos.h>
 @interface RNPrivilegesCheck : NSObject <RCTBridgeModule>
 
 @end

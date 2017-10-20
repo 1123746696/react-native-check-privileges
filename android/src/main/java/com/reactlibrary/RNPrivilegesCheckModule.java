@@ -1,10 +1,18 @@
 
 package com.reactlibrary;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.PermissionListener;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
+
+import java.util.List;
 
 public class RNPrivilegesCheckModule extends ReactContextBaseJavaModule {
 
@@ -19,4 +27,60 @@ public class RNPrivilegesCheckModule extends ReactContextBaseJavaModule {
   public String getName() {
     return "RNPrivilegesCheck";
   }
+  @ReactMethod
+  public void checkCamera(final Promise promise) {
+    AndPermission.with(this.reactContext)
+            .requestCode(300)
+            .permission(Permission.CAMERA)
+            .callback(new PermissionListener() {
+              @Override
+              public void onSucceed(int requestCode, List<String> grantedPermissions) {
+                // 权限申请成功回调。
+
+                // 这里的requestCode就是申请时设置的requestCode。
+                // 和onActivityResult()的requestCode一样，用来区分多个不同的请求。
+                if(requestCode == 300) {
+                  promise.resolve("1");
+                }
+              }
+
+              @Override
+              public void onFailed(int requestCode, List<String> deniedPermissions) {
+                // 权限申请失败回调。
+                if(requestCode == 300) {
+                  promise.reject("0","没有获取权限",null);
+                }
+              }
+            })
+            .start();
+  }
+  @ReactMethod
+  public void checkPhotos(final Promise promise) {
+    AndPermission.with(this.reactContext)
+            .requestCode(400)
+            .permission(Permission.STORAGE)
+            .callback(new PermissionListener() {
+              @Override
+              public void onSucceed(int requestCode, List<String> grantedPermissions) {
+                // 权限申请成功回调。
+
+                // 这里的requestCode就是申请时设置的requestCode。
+                // 和onActivityResult()的requestCode一样，用来区分多个不同的请求。
+                if(requestCode == 400) {
+                  promise.resolve("1");
+                }
+              }
+
+              @Override
+              public void onFailed(int requestCode, List<String> deniedPermissions) {
+                // 权限申请失败回调。
+                if(requestCode == 400) {
+                  promise.reject("0","没有获取权限",null);
+                }
+              }
+            }
+  )
+            .start();
+  }
+
 }
