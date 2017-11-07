@@ -68,5 +68,12 @@ RCT_EXPORT_METHOD(checkPhotos:(RCTPromiseResolveBlock)resolve
         callback(NO);
     }
 }
+- (NSDictionary *)constantsToExport
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    return @{
+             @"appName": [infoDictionary objectForKey:@"CFBundleDisplayName"],
+             };
+}
 @end
   

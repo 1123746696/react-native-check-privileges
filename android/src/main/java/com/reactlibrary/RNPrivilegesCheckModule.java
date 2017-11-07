@@ -1,6 +1,17 @@
 
 package com.reactlibrary;
 
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+import android.webkit.WebSettings;
+
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -12,7 +23,12 @@ import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+
+import javax.annotation.Nullable;
 
 public class RNPrivilegesCheckModule extends ReactContextBaseJavaModule {
 
@@ -82,5 +98,30 @@ public class RNPrivilegesCheckModule extends ReactContextBaseJavaModule {
   )
             .start();
   }
+
+
+    @Override
+    public @Nullable
+    Map<String, Object> getConstants() {
+        HashMap<String, Object> constants = new HashMap<String, Object>();
+        constants.put("appName", getApplicationName());
+        return constants;
+    }
+
+
+    public String getApplicationName() {
+        PackageManager packageManager = null;
+        ApplicationInfo applicationInfo = null;
+        try {
+            packageManager = getCurrentActivity().getApplicationContext().getPackageManager();
+            applicationInfo = packageManager.getApplicationInfo(getCurrentActivity().getApplicationContext().getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            applicationInfo = null;
+        }
+        String applicationName =
+                (String) packageManager.getApplicationLabel(applicationInfo);
+        return applicationName;
+    }
+
 
 }
