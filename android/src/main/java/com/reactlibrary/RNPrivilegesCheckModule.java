@@ -113,8 +113,8 @@ public class RNPrivilegesCheckModule extends ReactContextBaseJavaModule {
         PackageManager packageManager = null;
         ApplicationInfo applicationInfo = null;
         try {
-            packageManager = getCurrentActivity().getApplicationContext().getPackageManager();
-            applicationInfo = packageManager.getApplicationInfo(getCurrentActivity().getApplicationContext().getPackageName(), 0);
+            packageManager = getReactApplicationContext().getPackageManager();
+            applicationInfo = packageManager.getApplicationInfo(getReactApplicationContext().getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             applicationInfo = null;
         }
