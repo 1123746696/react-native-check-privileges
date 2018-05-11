@@ -16,10 +16,11 @@ public class RNPrivilegesCheckPackage implements ReactPackage {
       return Arrays.<NativeModule>asList(new RNPrivilegesCheckModule(reactContext));
     }
 
-    @Override
-    public List<Class<? extends JavaScriptModule>> createJSModules() {
-      return Collections.emptyList();
-    }
+    // RN 0.47之后过期
+    // @Override
+    // public List<Class<? extends JavaScriptModule>> createJSModules() {
+    //   return Collections.emptyList();
+    // }
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
